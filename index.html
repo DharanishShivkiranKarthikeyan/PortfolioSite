@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --section-bg: #fff;
+            --primary-color: #ff6b6b;
+            --secondary-color: #4ecdc4;
+            --nav-bg: #fff;
+            --nav-text: #333;
+            --gradient: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+        }
+
+        .dark-mode {
+            --background-color: #121212;
+            --text-color: #fff;
+            --section-bg: #1e1e1e;
+            --primary-color: #bb86fc;
+            --secondary-color: #03dac6;
+            --nav-bg: #1e1e1e;
+            --nav-text: #fff;
+            --gradient: linear-gradient(135deg, #bb86fc, #03dac6, #6200ea);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        #tsparticles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            background-color: var(--nav-bg);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: background-color 0.5s;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin: 0 1.5rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--nav-text);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background: var(--gradient);
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        #theme-toggle {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--nav-text);
+            margin-left: 2rem;
+            transition: transform 0.3s, color 0.3s;
+        }
+
+        #theme-toggle:hover {
+            transform: rotate(360deg) scale(1.1);
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
+        main {
+            padding-top: 80px;
+        }
+
+        section {
+            padding: 5rem 2rem;
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 1000px;
+            background-color: var(--section-bg);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            transition: background-color 0.5s;
+        }
+
+        #hero {
+            background: var(--gradient);
+            color: #fff;
+            padding: 12rem 2rem;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+
+        #hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        #hero p {
+            font-size: 1.8rem;
+            font-weight: 400;
+        }
+
+        .keyword {
+            display: inline-block;
+            min-width: 200px;
+            font-size: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        #about .about-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        #about .about-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+            transition: transform 0.5s;
+        }
+
+        #about .about-image:hover {
+            transform: rotate(360deg);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .skill {
+            background: var(--gradient);
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .skill i {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project {
+            background-color: var(--section-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        .project:hover {
+            transform: rotateY(180deg);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .project img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .project h3 {
+            font-size: 1.8rem;
+            margin: 1rem 0;
+            color: var(--primary-color);
+        }
+
+        #credentials {
+            background: var(--gradient);
+            color: #fff;
+        }
+
+        .credentials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .credential {
+            background-color: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .credential:hover {
+            transform: scale(1.05);
+        }
+
+        #testimonials .testimonial {
+            background-color: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        #contact .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #contact p {
+            font-size: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        #contact p i {
+            margin-right: 0.5rem;
+        }
+
+        footer {
+            background: var(--gradient);
+            color: #fff;
+            padding: 2rem;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            #hero {
+                padding: 6rem 1rem;
+            }
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+            #hero p {
+                font-size: 1.2rem;
+            }
+            section {
+                padding: 3rem 1rem;
+                clip-path: none;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+            .skill {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            nav ul {
+                flex-direction: column;
+            }
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            #about .about-content {
+                flex-direction: column;
+            }
+            #about .about-image {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="tsparticles"></div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#about" data-aos="fade-right">About</a></li>
+                <li><a href="#skills" data-aos="fade-right" data-aos-delay="100">Skills</a></li>
+                <li><a href="#projects" data-aos="fade-right" data-aos-delay="200">Projects</a></li>
+                <li><a href="#credentials" data-aos="fade-right" data-aos-delay="300">Credentials</a></li>
+                <li><a href="#testimonials" data-aos="fade-right" data-aos-delay="400">Testimonials</a></li>
+                <li><a href="#contact" data-aos="fade-right" data-aos-delay="500">Contact</a></li>
+            </ul>
+            <button id="theme-toggle" data-aos="fade-left"><i class="fas fa-moon"></i></button>
+        </nav>
+    </header>
+    <main>
+        <section id="hero">
+            <h1 data-aos="zoom-in" data-aos-duration="1000">Your Name <span id="keyword" class="keyword"></span></h1>
+            <p data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Full-Stack Developer & Senior C++/.NET Engineer</p>
+        </section>
+        <section id="about">
+            <h2 data-aos="fade-up">About Me</h2>
+            <div class="about-content" data-aos="fade-up" data-aos-delay="200">
+                <img src="your-image.jpg" alt="Your Name" class="about-image">
+                <p>With over a decade of experience, I am a highly skilled full-stack developer specializing in React, Express, Node.js, and senior-level C++/.NET development. I have led projects for startups and Fortune 500 companies, delivering scalable web applications and optimized desktop software. My passion lies in crafting innovative solutions that blend performance with exceptional user experiences.</p>
+            </div>
+        </section>
+        <section id="skills">
+            <h2 data-aos="fade-up">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill" data-aos="zoom-in" data-aos-delay="0"><i class="fab fa-react"></i> React</div>
+                <div class="skill" data-aos="zoom-in" data-aos-delay="100"><i class="fab fa-node-js"></i> Node.js</div>
+                <div class="skill" data-aos="zoom-in" data-aos-delay="200"><i class="fas fa-code"></i> C++</div>
+                <div class="skill" data-aos="zoom-in" data-aos-delay="300"><i class="fab fa-microsoft"></i> .NET</div>
+                <div class="skill" data-aos="zoom-in" data-aos-delay="400"><i class="fas fa-database"></i> MongoDB</div>
+                <div class="skill" data-aos="zoom-in" data-aos-delay="500"><i class="fas fa-cloud"></i> AWS</div>
+            </div>
+        </section>
+        <section id="projects">
+            <h2 data-aos="fade-up">Projects</h2>
+            <div class="projects-grid">
+                <div class="project" data-aos="flip-left" data-aos-delay="0">
+                    <img src="https://via.placeholder.com/350" alt="E-commerce Platform">
+                    <h3>E-commerce Platform</h3>
+                    <p>Developed a scalable e-commerce application using React, Node.js, and MongoDB, featuring user authentication and payment integration.</p>
+                </div>
+                <div class="project" data-aos="flip-left" data-aos-delay="100">
+                    <img src="https://via.placeholder.com/350" alt="Real-time Chat App">
+                    <h3>Real-time Chat App</h3>
+                    <p>Built a real-time chat application with WebSocket support using React and Node.js with Socket.io.</p>
+                </div>
+                <div class="project" data-aos="flip-left" data-aos-delay="200">
+                    <img src="https://via.placeholder.com/350" alt="Data Analysis Tool">
+                    <h3>Data Analysis Tool</h3>
+                    <p>Created a C++ desktop application integrated with .NET for processing and visualizing large datasets.</p>
+                </div>
+            </div>
+        </section>
+        <section id="credentials">
+            <h2 data-aos="fade-up">Certifications</h2>
+            <div class="credentials-grid">
+                <div class="credential" data-aos="fade-up" data-aos-delay="0">
+                    <h3>AWS Certified Developer</h3>
+                    <p>Certified in building and deploying applications on AWS cloud infrastructure.</p>
+                </div>
+                <div class="credential" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Microsoft Certified: Azure Developer</h3>
+                    <p>Expertise in developing solutions using Microsoft Azure services.</p>
+                </div>
+                <div class="credential" data-aos="fade-up" data-aos-delay="200">
+                    <h3>Scrum Master Certification</h3>
+                    <p>Proficient in leading agile teams and managing software development projects.</p>
+                </div>
+            </div>
+        </section>
+        <section id="testimonials">
+            <h2 data-aos="fade-up">Testimonials</h2>
+            <div class="testimonial" data-aos="fade-up" data-aos-delay="0">
+                <p>"An exceptional developer who delivered our project ahead of schedule with outstanding quality." – Jane Doe, CEO, TechCorp</p>
+            </div>
+            <div class="testimonial" data-aos="fade-up" data-aos-delay="100">
+                <p>"Their expertise in full-stack development transformed our application, boosting user engagement by 40%." – John Smith, CTO, Innovate Solutions</p>
+            </div>
+        </section>
+        <section id="contact">
+            <h2 data-aos="fade-up">Contact</h2>
+            <div class="contact-info" data-aos="fade-up" data-aos-delay="200">
+                <p><i class="fas fa-envelope"></i> your.email@example.com</p>
+                <p><i class="fas fa-phone"></i> (123) 456-7890</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 Your Name. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/all@3.5.0/tsparticles.all.bundle.min.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        const keywords = ["Developer", "Engineer", "Innovator"];
+        let index = 0;
+        const keywordElement = document.getElementById("keyword");
+        function changeKeyword() {
+            keywordElement.style.opacity = 0;
+            setTimeout(() => {
+                keywordElement.textContent = keywords[index];
+                keywordElement.style.opacity = 1;
+                index = (index + 1) % keywords.length;
+            }, 500);
+        }
+        setInterval(changeKeyword, 3000);
+        changeKeyword();
+
+        const toggleButton = document.getElementById('theme-toggle');
+        const themeIcon = toggleButton.querySelector('i');
+        toggleButton.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        tsParticles.load("tsparticles", {
+            fpsLimit: 60,
+            particles: {
+                number: { value: 0 },
+                color: { value: ["#ffffff", "#ff6b6b", "#4ecdc4"] },
+                shape: { type: ["circle", "square", "triangle"] },
+                opacity: { value: 0.8, animation: { enable: true, minimumValue: 0, speed: 2, startValue: "max", destroy: "min" } },
+                size: { value: 7, random: { enable: true, minimumValue: 3 } },
+                links: { enable: false },
+                life: { duration: { sync: true, value: 5 }, count: 1 },
+                move: { enable: true, gravity: { enable: true, acceleration: 15 }, speed: 60, decay: 0.1, direction: "none", random: false, straight: false, outModes: { default: "destroy", top: "none" } },
+                rotate: { value: { min: 0, max: 360 }, direction: "random", move: true, animation: { enable: true, speed: 60 } },
+                tilt: { direction: "random", enable: true, move: true, value: { min: 0, max: 360 }, animation: { enable: true, speed: 60 } },
+                roll: { darken: { enable: true, value: 25 }, enable: true, speed: { min: 15, max: 25 } },
+                wobble: { distance: 30, enable: true, move: true, speed: { min: -15, max: 15 } }
+            },
+            interactivity: { detectsOn: "canvas", events: { resize: true } },
+            detectRetina: true,
+            emitters: [
+                { direction: "top-right", rate: { delay: 0.1, quantity: 3 }, position: { x: 0, y: 100 }, size: { width: 0, height: 0 }, particles: { move: { angle: { offset: -15, value: 60 } } } },
+                { direction: "top-left", rate: { delay: 0.1, quantity: 3 }, position: { x: 100, y: 100 }, size: { width: 0, height: 0 }, particles: { move: { angle: { offset: 15, value: 60 } } } }
+            ]
+        });
+    </script>
+</body>
+</html>
